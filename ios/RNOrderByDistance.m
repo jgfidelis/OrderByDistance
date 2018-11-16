@@ -33,6 +33,7 @@ RCT_REMAP_METHOD(orderByDistance,
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     [locationManager stopUpdatingLocation];
+    NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
     NSArray *sortedArray = [coords sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         NSDictionary *first = (NSDictionary*)a;
         NSDictionary *second = (NSDictionary*)b;
@@ -49,8 +50,8 @@ RCT_REMAP_METHOD(orderByDistance,
         
         return distToFirst > distToSecond;
     }];
-    
-    resolve(sortedArray);
+    response[@"response"] = sortedArray;
+    resolve(response);
 }
 
 @end
